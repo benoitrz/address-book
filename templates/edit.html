@@ -1,10 +1,13 @@
-<html>
-<head>
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stylesheets/style.css') }}">
-</head>
-<body>
-<h1>Address book</h1>
+{% include "header.html" %}
 Edit
+
+<form>
+  <input type="text" name="firstname" value="firstName">
+  <input type="text" name="lastname" value="lastName">
+  <input type="text" name="telephone" value="telephone">
+  <input type="text" name="email" value="email">
+  <input type="submit" value="Create">
+</form>
 
 
 </body>
