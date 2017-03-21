@@ -1,14 +1,39 @@
 {% include "header.html" %}
-Edit
-
-<form>
-  <input type="text" name="firstname" value="firstName">
-  <input type="text" name="lastname" value="lastName">
-  <input type="text" name="telephone" value="telephone">
-  <input type="text" name="email" value="email">
-  <input type="submit" value="Create">
-</form>
-
-
+</div>
+{% if person %}
+    <div class="row">
+    <div class="col-md-2 col-md-offset-5">
+    <form action="{{ url_for('change_person', id=id) }}" method="post">
+        <input type="text" class="form-control" name="firstname" value="{{ person.firstname }}" required><br>
+        <input type="text" class="form-control" name="lastname" value="{{ person.lastname }}" required><br>
+        <input type="email" class="form-control" name="email" value="{{ person.email }}" required><br>
+        <input type="tel" class="form-control" name="telephone" value="{{ person.telephone }}" required><br>
+        <select class="form-control" name="choice" id="choice">
+            {% for org in orgas %}
+                {% if org.id == person.organization %}
+                    <option value="{{ org.id }}" selected>{{ org.name }}</option>
+                {% else %}
+                    <option value="{{ org.id }}">{{ org.name }}</option>
+                {% endif %}
+            {% endfor %}
+        </select><br>
+        <input type="submit" class="btn btn-primary" value="Edit">
+    </form>
+    </div>
+    </div>
+{% elif orga %}
+    <div class="row">
+        <div class="col-md-2 col-md-offset-5">
+        <form action="{{ url_for('change_orga', id=id) }}" method="post"><br>
+            <input type="text" class="form-control" name="name" value="{{ orga.name }}" required><br>
+            <input type="email" class="form-control" name="email" value="{{ orga.email }}" required><br>
+            <input type="tel" class="form-control" name="telephone" value="{{ orga.telephone }}" required><br>
+            <input type="submit" class="btn btn-primary" value="Edit">
+        </form>
+        </div>
+    </div>
+{% endif %}
+</div>
 </body>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </html>

@@ -1,14 +1,61 @@
 {% include "header.html" %}
-Create
+</div>
 
-<form>
-  <input type="text" name="firstname" value="firstName">
-  <input type="text" name="lastname" value="lastName">
-  <input type="text" name="telephone" value="telephone">
-  <input type="text" name="email" value="email">
-  <input type="submit" value="Create">
-</form>
+<div class="row">
+    <div class="col-md-2 col-md-offset-5">
 
+        <input type="radio" class="btn" id="radio1" name="radios" value="person" checked>
+        <label for="radio1">Person</label>
+        <br>
+        <input type="radio" class="btn" id="radio2" name="radios" value="orga">
+        <label for="radio2">Organization</label>
 
+        <form action="{{ url_for('create_orga') }}" method="post" data-toggle="validator">
+            <div id="organization_form"><br>
+                <input type="text" class="form-control" name="name" placeholder="name" required><br>
+                <input type="email" class="form-control" name="email" placeholder="email" required><br>
+                <input type="tel" class="form-control" name="telephone" placeholder="telephone" required><br>
+                <input type="submit" class="btn btn-success" value="Create">
+             </div>
+        </form>
+
+        <form action="{{ url_for('create_person') }}" method="post">
+            <div id="person_form">
+                <select class="form-control" name="choice" id="choice">
+                    {% for organization in organizations %}
+                        <option value="{{ organization.name }}" selected>{{ organization.name }}</option>
+                    {% endfor %}
+                </select><br>
+                <input type="text" class="form-control" name="firstname" placeholder="firstname" required><br>
+                <input type="text" class="form-control" name="lastname" placeholder="lastname" required><br>
+                <input type="email" class="form-control" name="email" placeholder="email" required><br>
+                <input type="tel" class="form-control" name="telephone" placeholder="telephone" required><br>
+                <input type="submit" class="btn btn-success" value="Create">
+            </div>
+        </form>
+    </div>
+</div>
+</div>
 </body>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<script>
+    var radios = document.getElementsByName("radios");
+    var person_form = document.getElementById("person_form");
+    var organization_form = document.getElementById("organization_form");
+    person_form.style.display = 'block';
+    organization_form.style.display = 'none';
+    for(var i = 0; i < radios.length; i++) {
+        radios[i].onclick = function() {
+            var val = this.value;
+            if(val == 'person'){
+                person_form.style.display = 'block';
+                organization_form.style.display = 'none';
+            }
+            else if(val == 'orga'){
+                 person_form.style.display = 'none';
+                 organization_form.style.display = 'block';
+            }
+        }
+    }
+</script>
 </html>
